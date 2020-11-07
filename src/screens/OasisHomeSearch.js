@@ -18,9 +18,55 @@ import {
     Item
 } from "native-base";
 
+import backend from "../api/backend";
+
+import getEnvVars from "../../enviroment";
+
+
+const { apiKey } = getEnvVars();
+
+
 //const { width, height} = Dimensions.get("window");
 
 const OasisHomeSearch = () => {
+
+
+    //Variables necesarias para la conectividad de la
+
+    const [ hotels, setHotels ] = useState(null);
+
+    const [ error, setError ] = useState(false);
+
+    const [ search, setSearch ] = useState("");
+
+
+
+    const getHotels = async () =>{
+
+
+        try{
+            const response =  await backend.get(`flights?access_key=${apiKey}`);
+
+            // console.log(response.data)
+
+        }
+        catch (error){
+
+            setError(true);
+
+        }
+
+
+    }
+
+    //getHotels();
+
+    // useEffect(() =>{
+    //     getHotels();
+    // });
+
+
+
     return (
         <Container style= {styles.container}>
             <Header style = {styles.header}>
@@ -29,7 +75,7 @@ const OasisHomeSearch = () => {
             </Header>
             <Content style={{marginTop:90, marginLeft: 30, marginRight: 30}}>
             <Item>
-            <Input placeholder="Ubicación" style={styles.texto}/>
+            <Input placeholder="Ubicación" style={styles.texto} value={search} onChangeText={setSearch} />
             <Icon name="ios-search"/>
           </Item>
                 <View style={{flex:1, flexDirection: 'row', marginTop: 20}} >
