@@ -18,9 +18,40 @@ import {
     Item
 } from "native-base";
 
+import backend from "../api/backend";
+import getEnvVars from "../../enviroment";
+
+const {apiKey} = getEnvVars();
+
+
 //const { width, height} = Dimensions.get("window");
 
 const OasisHomeSearch = () => {
+
+    const [hotels, setHolets] = useState(null);
+
+    const [error, setError] = useState(false);
+
+    const [search, setSearch] = useState("");
+
+        const getHotels = async () =>
+        {
+            try{
+
+            const response = await backend.get(`flights?access_key=${apiKey}`);
+
+            console.log(response.data);
+            //setHolets(response.data);
+            }
+            catch(error){
+                setError(true);
+            }
+        }
+
+        useEffect(() =>{
+            getHotels();
+        });
+
     return (
         <Container style= {styles.container}>
             <Header style = {styles.header}>
