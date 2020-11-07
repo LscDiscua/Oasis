@@ -1,4 +1,5 @@
 /* Importar modulos necesarios para la pantalla */
+/*Diseño*/
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Image, Dimensions, View} from "react-native";
 
@@ -148,7 +149,7 @@ const styles = StyleSheet.create({
     },
     palmerasImage:{
         width: 100,
-        height: 10,
+        height: 20,
         //resizeMode: "container"
         marginBottom: 100,
     }
