@@ -63,12 +63,9 @@ const OasisSearchResults = ({ route, navigation}) => {
     return(
        <Container style ={{backgroundColor: "#aac7e2"}}>
            <H1 style={styles.titulosIniciales}> {search}</H1>
-           <View style ={{marginRight:10, marginLeft:10}}>
-               <TouchableOpacity onPress = {() => { navigation.navigate("SearchResults")}}>
-
-                    <Text style={styles.titulos}>Seleccione el destino que desea segun la ubicacion</Text>
-                </TouchableOpacity>
-            </View>
+                <View style ={{marginRight:10, marginLeft:10}}>
+                     <Text style={styles.titulos}>Seleccione el destino que desea segun la ubicacion</Text>
+                </View>
         <Content style={styles.sizeContenedor}>
                
         <View styles = {{marginTop:30}}>
@@ -80,7 +77,9 @@ const OasisSearchResults = ({ route, navigation}) => {
                 renderItem ={({item}) =>{
                     return(
                     <View >
-                        <Card style= {styles.opcionesDestino}><CardItem ><Body><Text>{item.name}</Text></Body></CardItem></Card>
+                         <TouchableOpacity onPress = {() => { navigation.navigate("InfoHotels", {destinationId: item.destinationId})}}>
+                            <Card style= {styles.opcionesDestino}><CardItem ><Body><Text>{item.name}</Text></Body></CardItem></Card>
+                        </TouchableOpacity>
                     </View>
                     ) 
                 }}
@@ -93,7 +92,9 @@ const OasisSearchResults = ({ route, navigation}) => {
              renderItem ={({item}) =>{
                  return(
                     <View >
-                        <Card  style= {styles.opcionesDestino}><CardItem><Body><Text>{item.name}</Text></Body></CardItem></Card>
+                         <TouchableOpacity onPress = {() => { navigation.navigate("InfoHotels", {destinationId: item.destinationId})}}>
+                            <Card  style= {styles.opcionesDestino}><CardItem><Body><Text>{item.name}</Text></Body></CardItem></Card>
+                        </TouchableOpacity>
                     </View>
                  ) 
              }}
@@ -106,20 +107,9 @@ const OasisSearchResults = ({ route, navigation}) => {
                     renderItem ={({item}) =>{
                         return(
                         <View >
-                            <Card  style= {styles.opcionesDestino}><CardItem><Body><Text style = {{justifyContent:"center"}}>{item.name}</Text></Body></CardItem></Card>
-                        </View>
-                        ) 
-                    }}
-                />
-         <Text style={styles.opcion4}> Cercanos a Otros Hoteles</Text>
-         <FlatList style ={{backgroundColor: "#aac7e2"}}
-                    data = {hotels.suggestions[3].entities}
-                    keyExtractor ={(item) => item.destinationId}
-                    ListEmptyComponent = {<Text>No se han encontrado Hoteles</Text>}
-                    renderItem ={({item}) =>{
-                        return(
-                        <View >
-                            <Card  style= {styles.opcionesDestino}><CardItem><Body><Text>{item.name}</Text></Body></CardItem></Card>
+                            <TouchableOpacity onPress = {() => { navigation.navigate("InfoHotels", {destinationId: item.destinationId})}}>
+                                 <Card  style= {styles.opcionesDestino}><CardItem><Body><Text style = {{justifyContent:"center"}}>{item.name}</Text></Body></CardItem></Card>
+                            </TouchableOpacity>
                         </View>
                         ) 
                     }}
