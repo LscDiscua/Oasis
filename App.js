@@ -10,6 +10,7 @@ import { createStackNavigator }  from "@react-navigation/stack";
 
 import OasisHomeSearch from "./src/screens/OasisHomeSearch"; // Ruta relativa dde donde se encuentra 
 import OasisSearchResults from "./src/screens/OasisSearchResults";
+import OasisInfoHotels from "./src/screens/OasisInfoHotels";
 
 const { width, height} = Dimensions.get("window");
 // Crear nuestras navegacion basada en stack (pilas)
@@ -42,6 +43,10 @@ export default function App() {
           backgroundColor: "#eb9284",
         } }}/>
         <Stack.Screen name ="SearchResults" component = {OasisSearchResults} options={{ title: "Destinos Encontrados",
+      headerStyle: {
+        backgroundColor: "#eb9284",
+      } }}/>
+      <Stack.Screen name ="InfoHotels" component = {OasisInfoHotels} options={{ title: "Hoteles Encontrados",
       headerStyle: {
         backgroundColor: "#eb9284",
       } }}/>
