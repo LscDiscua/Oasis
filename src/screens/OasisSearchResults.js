@@ -60,18 +60,7 @@ const OasisSearchResults = ({ route, navigation}) => {
 
 
 
-    // const arreglo = () =>{
-    
-    //     (hotels.suggestions).forEach(valor => {
-    
-    //         (hotels.entities).forEach(valor => {
-    
-    //             console.log(`${valor}`);
-            
-    //         });
-            
-    //     });
-    // }
+
 
     // console.log(hotels.suggestions[0].entities)
     return(
