@@ -14,3 +14,6 @@ web-build/
 
 # Variable de entorno
 enviroment.js
+
+# Chrome 
+debug.log

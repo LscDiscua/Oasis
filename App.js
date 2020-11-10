@@ -26,12 +26,11 @@ function HeaderHome(){
     
       <Text style= {{marginTop: 20}} style={styles.eslogan}>Encuentra tu serenidad</Text>
       </View>
-       
-     
     </View>
    
   );
 }
+
 
 export default function App() {
   /// Vamos a retorna dicha pantalla  como un componente <>
@@ -48,7 +47,7 @@ export default function App() {
       } }}/>
       <Stack.Screen name ="InfoHotels" component = {OasisInfoHotels} options={{ title: "Hoteles Encontrados",
       headerStyle: {
-        backgroundColor: "#eb9284",
+        backgroundColor: "#eb9284"
       } }}/>
       </Stack.Navigator>
     </NavigationContainer>
