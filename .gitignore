@@ -13,4 +13,8 @@ web-build/
 .DS_Store
 
 # Variable de entorno
+<<<<<<< HEAD
+=======
+
+>>>>>>> 0267cdaccf5ff1e25e38bc424d60eea68ae70cec
 enviroment.js

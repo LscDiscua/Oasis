@@ -20,6 +20,7 @@ import {
 } from "native-base";
 
 import backend from "../api/backend";
+<<<<<<< HEAD
 import getEnvVars from "../../enviroment";
 
 const {apiKey} = getEnvVars();
@@ -52,50 +53,67 @@ const OasisHomeSearch = () => {
             getHotels();
         });
         
+=======
+import getEnvVars  from "../../enviroment";
+
+const  { apiUrl } = getEnvVars();
+
+
+//const { width, height} = Dimensions.get("window");
+
+const OasisHomeSearch = ( {navigation } ) => {
+
+
+    //Variables necesarias para la conectividad de la
+
+    const [ search, setSearch ] = useState("");
+
+
+>>>>>>> 0267cdaccf5ff1e25e38bc424d60eea68ae70cec
     return (
         <Container style= {styles.container}>
-            <Header style = {styles.header}>
+            {/* <Header style = {styles.header}>
                 <Image source={require("../../assets/logo.png")} style = {styles.oasisImage}/>
                 <Text style= {{marginTop: 20}} style={styles.eslogan}>Encuentra tu serenidad</Text>
-            </Header>
+            </Header> */}
             <Content style={{marginTop:90, marginLeft: 30, marginRight: 30}}>
             <Item>
-            <Input placeholder="Ubicación" style={styles.texto}/>
+            <Input placeholder="Ubicación" style={styles.texto} value={search} onChangeText={setSearch} />
             <Icon name="ios-search"/>
           </Item>
                 <View style={{flex:1, flexDirection: 'row', marginTop: 20}} >
                     <View  style={{height:10, flexDirection: 'row'}}/>
-                    <View  style={{flex:17, flexDirection: 'row'}} >
-                    <Text>Fecha de Entrada</Text>
-
+                        <View  style={{flex:17, flexDirection: 'row'}} >
+                            <Text style= {{marginLeft: 10}}>Fecha de Entrada</Text>
                         </View>
                         <View  style={{flex:12, flexDirection: 'row'}}>
-                        <Text>Fecha de Salida</Text>
+                        <Text style= {{marginLeft: 15}}>Fecha de Salida</Text>
                         </View>
                 </View>
 
                 <View style={{flex:1, flexDirection: 'row'}}>
                     <View  style={{height:15, flexDirection: 'row'}} />
-                    <View  style={{flex:10, flexDirection: 'row', height:40, width:80}} style={{marginTop:10, marginLeft: 13, marginRight: 30, backgroundColor: "#aac7e2"}}>
+                    <View  style={{flex:10, flexDirection: 'row', height:40, width:80}} style={{marginTop:10, marginLeft: 16, marginRight: 30, backgroundColor: "#aac7e2"}}>
 
                     <DatePicker/>
                         </View>
-                        <View  style={{flex:10, flexDirection: 'row'}}style={{marginTop:10, marginLeft: 40, marginRight: 25,backgroundColor: "#aac7e2"}}>
+                        <View  style={{flex:10, flexDirection: 'row'}}style={{marginTop:10, marginLeft: 80, marginRight: 25,backgroundColor: "#aac7e2"}}>
                     <DatePicker/>
                         </View>
                 </View>
                 
                 <View>
-                <Text style={{marginTop:20, marginLeft: 0, marginRight: 25}}>Habitación para: </Text>
-                    <Input style={{marginTop:0, marginLeft: 30, marginRight: 25}} style={styles.texto} placeholder="Adultos"/>
-                    </View>
-                    <Button rounded style={styles.boton}>
+                <Text style={{marginTop:20, marginLeft: 10, marginRight: 25, marginBottom: 10}}>Habitación para: </Text>
+                    <Input style={{marginTop:0, marginLeft: 30, marginRight: 25}} style={styles.texto} placeholder="Cantidad de Personas"/>
+                </View>
+                    <Button rounded style={styles.boton} 
+                    onPress = {() => { navigation.navigate("SearchResults", {search})}}>
                     <Text>Buscar</Text>
                     </Button>
 
                
             </Content>
-            <Image source={require("../../assets/Palmeritas.png")} style={{marginBottom: 30, marginLeft: 120}}/>
+            <Image source={require("../../assets/Palmeritas.png")} style={{marginBottom: 30, marginLeft: 150}}/>
         </Container>
     );
 }
@@ -141,7 +159,7 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignContent:"center", 
         height : 50,
-        width: 315,
+        width: 345,
         marginTop: 25
     },
     view:{
@@ -151,7 +169,7 @@ const styles = StyleSheet.create({
         width: 100,
         height: 20,
         //resizeMode: "container"
-        marginBottom: 100,
+        marginBottom: 100
     }
 });
 
