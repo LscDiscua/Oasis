@@ -17,6 +17,7 @@ from "native-base";
 
 import backend from "../api/backend";
 import getEnvVars from "../../enviroment";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const { apiUrl } = getEnvVars();
 
@@ -58,29 +59,17 @@ const OasisSearchResults = ({ route, navigation}) => {
         )  
     }
 
-
-
-    // const arreglo = () =>{
-    
-    //     (hotels.suggestions).forEach(valor => {
-    
-    //         (hotels.entities).forEach(valor => {
-    
-    //             console.log(`${valor}`);
-            
-    //         });
-            
-    //     });
-    // }
-
     // console.log(hotels.suggestions[0].entities)
     return(
        <Container style ={{backgroundColor: "#aac7e2"}}>
            <H1 style={styles.titulosIniciales}> {search}</H1>
            <View style ={{marginRight:10, marginLeft:10}}>
+               <TouchableOpacity onPress = {() => { navigation.navigate("SearchResults")}}>
+
                     <Text style={styles.titulos}>Seleccione el destino que desea segun la ubicacion</Text>
-               </View>
-           <Content style={styles.sizeContenedor}>
+                </TouchableOpacity>
+            </View>
+        <Content style={styles.sizeContenedor}>
                
         <View styles = {{marginTop:30}}>
             <Text style ={styles.opciones} >Lugares de la Cuidad</Text>
