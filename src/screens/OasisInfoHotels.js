@@ -20,7 +20,7 @@ const {apiUrl} = getEnvVars();
 
 const OasisInfoHotels = ({ route, navigation}) => {
 
-    const   { destinationId } = route.params;
+    const   { destinationId} = route.params;
 
     const [ resultHotels, setResultsHotels ] = useState(null);
 
@@ -57,7 +57,7 @@ const OasisInfoHotels = ({ route, navigation}) => {
             <Container>
                 <View  style ={{backgroundColor: "#aac7e2"}}>
                     <Text style={styles.informacionHotel}>
-                        Escoja el Hotel que desea
+                        Escoja el Hotel que desea 
                     </Text>
                 </View>
                 <Content>
