@@ -13,8 +13,13 @@ web-build/
 .DS_Store
 
 # Variable de entorno
+enviroment.js
 
+<<<<<<< HEAD
 enviroment.js
 
 # Chrome
+=======
+# Chrome 
+>>>>>>> KarlaArauz
 debug.log

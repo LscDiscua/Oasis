@@ -17,12 +17,15 @@ from "native-base";
 
 import backend from "../api/backend";
 import getEnvVars from "../../enviroment";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const { apiUrl } = getEnvVars();
 
 const OasisSearchResults = ({ route, navigation}) => {
 
     const { search } = route.params;
+
+    // const { people } = route.params;
 
     const [hotels, setHotels] = useState(null);
 
@@ -58,18 +61,14 @@ const OasisSearchResults = ({ route, navigation}) => {
         )  
     }
 
-
-
-
-
     // console.log(hotels.suggestions[0].entities)
     return(
        <Container style ={{backgroundColor: "#aac7e2"}}>
            <H1 style={styles.titulosIniciales}> {search}</H1>
-           <View style ={{marginRight:10, marginLeft:10}}>
-                    <Text style={styles.titulos}>Seleccione el destino que desea segun la ubicacion</Text>
-               </View>
-           <Content style={styles.sizeContenedor}>
+                <View style ={{marginRight:10, marginLeft:10}}>
+    <Text style={styles.titulos}>Seleccione el destino que desea segun la ubicacion</Text>
+                </View>
+        <Content style={styles.sizeContenedor}>
                
         <View styles = {{marginTop:30}}>
             <Text style ={styles.opciones} >Lugares de la Cuidad</Text>
@@ -80,7 +79,9 @@ const OasisSearchResults = ({ route, navigation}) => {
                 renderItem ={({item}) =>{
                     return(
                     <View >
-                        <Card style= {styles.opcionesDestino}><CardItem ><Body><Text>{item.name}</Text></Body></CardItem></Card>
+                         <TouchableOpacity onPress = {() => { navigation.navigate("InfoHotels", {destinationId: item.destinationId})}}>
+                            <Card style= {styles.opcionesDestino}><CardItem ><Body><Text>{item.name}</Text></Body></CardItem></Card>
+                        </TouchableOpacity>
                     </View>
                     ) 
                 }}
@@ -93,7 +94,15 @@ const OasisSearchResults = ({ route, navigation}) => {
              renderItem ={({item}) =>{
                  return(
                     <View >
-                        <Card  style= {styles.opcionesDestino}><CardItem><Body><Text>{item.name}</Text></Body></CardItem></Card>
+                         <TouchableOpacity onPress = {() => { navigation.navigate("InfoHotels", {destinationId: item.destinationId})}}>
+                            <Card  style= {styles.opcionesDestino}>
+                                <CardItem>
+                                    <Body>
+                                        <Text>{item.name}</Text>
+                                    </Body>
+                                </CardItem>
+                            </Card>
+                        </TouchableOpacity>
                     </View>
                  ) 
              }}
@@ -106,20 +115,15 @@ const OasisSearchResults = ({ route, navigation}) => {
                     renderItem ={({item}) =>{
                         return(
                         <View >
-                            <Card  style= {styles.opcionesDestino}><CardItem><Body><Text style = {{justifyContent:"center"}}>{item.name}</Text></Body></CardItem></Card>
-                        </View>
-                        ) 
-                    }}
-                />
-         <Text style={styles.opcion4}> Cercanos a Otros Hoteles</Text>
-         <FlatList style ={{backgroundColor: "#aac7e2"}}
-                    data = {hotels.suggestions[3].entities}
-                    keyExtractor ={(item) => item.destinationId}
-                    ListEmptyComponent = {<Text>No se han encontrado Hoteles</Text>}
-                    renderItem ={({item}) =>{
-                        return(
-                        <View >
-                            <Card  style= {styles.opcionesDestino}><CardItem><Body><Text>{item.name}</Text></Body></CardItem></Card>
+                            <TouchableOpacity onPress = {() => { navigation.navigate("InfoHotels", {destinationId: item.destinationId}, {people})}}>
+                                 <Card  style= {styles.opcionesDestino}>
+                                     <CardItem>
+                                         <Body>
+                                             <Text style = {{justifyContent:"center"}}>{item.name}</Text>
+                                         </Body>
+                                    </CardItem>
+                                    </Card>
+                            </TouchableOpacity>
                         </View>
                         ) 
                     }}

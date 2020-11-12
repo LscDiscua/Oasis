@@ -1,4 +1,5 @@
 /* Importar modulos necesarios para la pantalla */
+/*Diseño*/
 import React, { useEffect, useState } from "react";
 import { StyleSheet, Image, Dimensions, View} from "react-native";
 
@@ -10,12 +11,12 @@ import {
     Left,
     Right, 
     Text,
-    DatePicker,
     Input,
     Content,
     Button,
     Icon, 
-    Item
+    Item,
+    DatePicker
 } from "native-base";
 
 import backend from "../api/backend";
@@ -32,6 +33,12 @@ const OasisHomeSearch = ( {navigation } ) => {
     //Variables necesarias para la conectividad de la
 
     const [ search, setSearch ] = useState("");
+    
+    // const [ checkIn, setCheckIn ] = useState("");
+
+    // const [ checkOut, setCheckOut ] = useState("");
+
+    const [ people, setPeople] = useState("")
 
 
     return (
@@ -59,19 +66,21 @@ const OasisHomeSearch = ( {navigation } ) => {
                     <View  style={{height:15, flexDirection: 'row'}} />
                     <View  style={{flex:10, flexDirection: 'row', height:40, width:80}} style={{marginTop:10, marginLeft: 16, marginRight: 30, backgroundColor: "#aac7e2"}}>
 
-                    <DatePicker/>
+                    <DatePicker placeHolderText="Seleccione"/>
                         </View>
                         <View  style={{flex:10, flexDirection: 'row'}}style={{marginTop:10, marginLeft: 80, marginRight: 25,backgroundColor: "#aac7e2"}}>
-                    <DatePicker/>
+                    <DatePicker placeHolderText ="Seleccione"/>
                         </View>
                 </View>
                 
                 <View>
                 <Text style={{marginTop:20, marginLeft: 10, marginRight: 25, marginBottom: 10}}>Habitación para: </Text>
-                    <Input style={{marginTop:0, marginLeft: 30, marginRight: 25}} style={styles.texto} placeholder="Cantidad de Personas"/>
+                    <Input style={{marginTop:0, marginLeft: 30, marginRight: 25}} 
+                    style={styles.texto} placeholder="Cantidad de Personas"
+                    value ={people} onChangeText = {setPeople}/>
                 </View>
                     <Button rounded style={styles.boton} 
-                    onPress = {() => { navigation.navigate("SearchResults", {search})}}>
+                    onPress = {() => { navigation.navigate("SearchResults",{search})}}>
                     <Text>Buscar</Text>
                     </Button>
 
@@ -105,14 +114,14 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginLeft: -110,
         fontSize: 28,
-        fontStyle: "italic"
+        // fontStyle: "italic"
     },
     texto:{
         justifyContent: "center",
         alignContent:"center",
         backgroundColor: "#FFFFFF",
         marginRight: -25,
-        fontStyle: "italic"
+        // fontStyle: "italic"
     },
     icono:{
         marginTop: 10
@@ -131,7 +140,7 @@ const styles = StyleSheet.create({
     },
     palmerasImage:{
         width: 100,
-        height: 10,
+        height: 20,
         //resizeMode: "container"
         marginBottom: 100
     }
