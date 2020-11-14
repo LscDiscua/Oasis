@@ -15,12 +15,17 @@ from "native-base";
 
 import backend from "../api/backend";
 import getEnvVars from "../../enviroment";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 const {apiUrl} = getEnvVars();
 
+
+
+
 const OasisInfoHotels = ({ route, navigation}) => {
 
-    const   { destinationId} = route.params;
+
+    const   { destinationId, people} = route.params;
 
     const [ resultHotels, setResultsHotels ] = useState(null);
 
@@ -52,23 +57,23 @@ const OasisInfoHotels = ({ route, navigation}) => {
         )
     }
 
-    console.log(resultHotels.data.body.searchResults.results[0].id)
+    // console.log(resultHotels.data.body.searchResults.results[0].id)
     return(
-            <Container>
+            <View>
                 <View  style ={{backgroundColor: "#aac7e2"}}>
                     <Text style={styles.informacionHotel}>
-                        Escoja el Hotel que desea 
+                        Escoja el Hotel que desea {people}
                     </Text>
                 </View>
-                <Content>
                     <View>
                         <FlatList style ={{backgroundColor: "#aac7e2"}}
                          data ={resultHotels.data.body.searchResults.results}
-                         keyExtractor = {(item) => item.id}
-                         ListEmptyComponent ={<Text>No se han encontrado hoteles</Text>}
+                         keyExtractor = {(item) => item.id.toString()}
+                         ListEmptyComponent ={<Text>No hotels found</Text>}
                          renderItem = {({item}) =>{
                                 return(
                                     <View>
+                                        <TouchableOpacity onPress = {() => { navigation.navigate("HotelDetails", {id: item.id})}}>
                                         <Card style={styles.opcionesHoteles}>
                                             <CardItem style ={{backgroundColor: "#aac7e2"}}>
                                                 <Body> 
@@ -80,13 +85,13 @@ const OasisInfoHotels = ({ route, navigation}) => {
                                                 </Body>
                                             </CardItem>
                                         </Card>
-                                    </View>
-                                )
+                            </TouchableOpacity>
+                        </View>
+                            )
                          }}
                         />
                     </View>
-                </Content>
-            </Container>
+            </View>
     );
 }
 

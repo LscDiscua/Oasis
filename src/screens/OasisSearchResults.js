@@ -23,7 +23,7 @@ const { apiUrl } = getEnvVars();
 
 const OasisSearchResults = ({ route, navigation}) => {
 
-    const { search } = route.params;
+    const { search, people, checkIn, checkOut } = route.params;
 
     // const { people } = route.params;
 
@@ -66,35 +66,41 @@ const OasisSearchResults = ({ route, navigation}) => {
        <Container style ={{backgroundColor: "#aac7e2"}}>
            <H1 style={styles.titulosIniciales}> {search}</H1>
                 <View style ={{marginRight:10, marginLeft:10}}>
-    <Text style={styles.titulos}>Seleccione el destino que desea segun la ubicacion</Text>
+                     <Text style={styles.titulos}>Select the destination you want according to the location</Text>
                 </View>
-        <Content style={styles.sizeContenedor}>
-               
+        {/* <Content style={styles.sizeContenedor}> */}
+        <View style={styles.sizeContenedor}>  
         <View styles = {{marginTop:30}}>
-            <Text style ={styles.opciones} >Lugares de la Cuidad</Text>
+            <Text style ={styles.opciones} >Places of the City</Text>
                 <FlatList style ={styles.sizeFla}
                 data = {hotels.suggestions[0].entities}
                 keyExtractor ={(item) => item.destinationId}
-                ListEmptyComponent = {<Text>No se han encontrado Hoteles</Text>}
+                ListEmptyComponent = {<Text>No hotels found</Text>}
                 renderItem ={({item}) =>{
                     return(
                     <View >
-                         <TouchableOpacity onPress = {() => { navigation.navigate("InfoHotels", {destinationId: item.destinationId})}}>
-                            <Card style= {styles.opcionesDestino}><CardItem ><Body><Text>{item.name}</Text></Body></CardItem></Card>
+                         <TouchableOpacity onPress = {() => { navigation.navigate("InfoHotels", {destinationId: item.destinationId, people})}}>
+                            <Card style= {styles.opcionesDestino}>
+                                <CardItem>
+                                    <Body>
+                                        <Text>{item.name}</Text>
+                                    </Body>
+                                </CardItem>
+                            </Card>
                         </TouchableOpacity>
                     </View>
                     ) 
                 }}
                 />
-        <Text style ={styles.opciones} >Punto de Referencia</Text>
+        <Text style ={styles.opciones}>Reference point</Text>
         <FlatList style ={{backgroundColor: "#aac7e2"}}
              data = {hotels.suggestions[1].entities}
              keyExtractor ={(item) => item.destinationId}
-             ListEmptyComponent = {<Text>No se han encontrado Hoteles</Text>}
+             ListEmptyComponent = {<Text>No hotels found</Text>}
              renderItem ={({item}) =>{
                  return(
                     <View >
-                         <TouchableOpacity onPress = {() => { navigation.navigate("InfoHotels", {destinationId: item.destinationId})}}>
+                         <TouchableOpacity onPress = {() => { navigation.navigate("InfoHotels", {destinationId: item.destinationId, people})}}>
                             <Card  style= {styles.opcionesDestino}>
                                 <CardItem>
                                     <Body>
@@ -107,15 +113,15 @@ const OasisSearchResults = ({ route, navigation}) => {
                  ) 
              }}
         />
-        <Text style ={styles.opciones}>Grupos de Transporte</Text>
+        <Text style ={styles.opciones}>Transport groups</Text>
         <FlatList style ={{backgroundColor: "#aac7e2"}}
                     data = {hotels.suggestions[2].entities}
                     keyExtractor ={(item) => item.destinationId}
-                    ListEmptyComponent = {<Text>No se han encontrado Hoteles</Text>}
+                    ListEmptyComponent = {<Text>No hotels found</Text>}
                     renderItem ={({item}) =>{
                         return(
                         <View >
-                            <TouchableOpacity onPress = {() => { navigation.navigate("InfoHotels", {destinationId: item.destinationId}, {people})}}>
+                            <TouchableOpacity onPress = {() => { navigation.navigate("InfoHotels", {destinationId: item.destinationId, people})}}>
                                  <Card  style= {styles.opcionesDestino}>
                                      <CardItem>
                                          <Body>
@@ -129,7 +135,8 @@ const OasisSearchResults = ({ route, navigation}) => {
                     }}
                 />
         </View>
-        </Content>
+        {/* </Content> */}
+        </View>     
        </Container>
  
     );

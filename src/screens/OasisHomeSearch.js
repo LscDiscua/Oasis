@@ -1,7 +1,9 @@
 /* Importar modulos necesarios para la pantalla */
 /*Diseño*/
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import { StyleSheet, Image, Dimensions, View} from "react-native";
+import DatePicker from "react-native-datepicker";
+
 
 import {
     Container,
@@ -15,8 +17,7 @@ import {
     Content,
     Button,
     Icon, 
-    Item,
-    DatePicker
+    Item
 } from "native-base";
 
 import backend from "../api/backend";
@@ -24,125 +25,174 @@ import getEnvVars  from "../../enviroment";
 
 const  { apiUrl } = getEnvVars();
 
+const { width, height} = Dimensions.get("window");
 
-//const { width, height} = Dimensions.get("window");
 
 const OasisHomeSearch = ( {navigation } ) => {
-
 
     //Variables necesarias para la conectividad de la
 
     const [ search, setSearch ] = useState("");
     
-    // const [ checkIn, setCheckIn ] = useState("");
+    const [ checkIn, setCheckIn ] = useState("");
 
-    // const [ checkOut, setCheckOut ] = useState("");
+    const [ checkOut, setCheckOut ] = useState("");
 
-    const [ people, setPeople] = useState("")
+    const [ people, setPeople] = useState("");
 
-
+            
     return (
         <Container style= {styles.container}>
             {/* <Header style = {styles.header}>
                 <Image source={require("../../assets/logo.png")} style = {styles.oasisImage}/>
                 <Text style= {{marginTop: 20}} style={styles.eslogan}>Encuentra tu serenidad</Text>
             </Header> */}
-            <Content style={{marginTop:90, marginLeft: 30, marginRight: 30}}>
+            <Content style={{marginTop:75, marginLeft: 30, marginRight: 30}}>
             <Item>
-            <Input placeholder="Ubicación" style={styles.texto} value={search} onChangeText={setSearch} />
+            <Input placeholder="Location" style={styles.cajasDeTexto} value={search} onChangeText={setSearch} />
             <Icon name="ios-search"/>
           </Item>
-                <View style={{flex:1, flexDirection: 'row', marginTop: 20}} >
+                <View style={{flex:1, flexDirection: 'row', marginTop: 10}} >
                     <View  style={{height:10, flexDirection: 'row'}}/>
                         <View  style={{flex:17, flexDirection: 'row'}} >
-                            <Text style= {{marginLeft: 10}}>Fecha de Entrada</Text>
+                            <Text style= {{marginLeft: 30}} style= {styles.estiloTexto}>Incoming date</Text>
                         </View>
                         <View  style={{flex:12, flexDirection: 'row'}}>
-                        <Text style= {{marginLeft: 15}}>Fecha de Salida</Text>
+                        <Text style= {{marginLeft: 7}} style= {styles.estiloTexto}>Outcoming date</Text>
                         </View>
                 </View>
 
                 <View style={{flex:1, flexDirection: 'row'}}>
-                    <View  style={{height:15, flexDirection: 'row'}} />
-                    <View  style={{flex:10, flexDirection: 'row', height:40, width:80}} style={{marginTop:10, marginLeft: 16, marginRight: 30, backgroundColor: "#aac7e2"}}>
-
-                    <DatePicker placeHolderText="Seleccione"/>
+                    <View  style={{height:height * 0.10, flexDirection: 'row'}} />
+                    <View style = {styles.viewEntrada}>
+                    <DatePicker 
+                    mode="date"
+                    onDateChange={(checkIn) => {
+                        setCheckIn(checkIn);}}
+                    />
+                    </View>
+                    <View style={styles.viewSalida}>
+                        <DatePicker 
+                            mode="date"
+                            onDateChange={(checkOut) => {
+                                setCheckOut(checkOut);}}/>
                         </View>
-                        <View  style={{flex:10, flexDirection: 'row'}}style={{marginTop:10, marginLeft: 80, marginRight: 25,backgroundColor: "#aac7e2"}}>
-                    <DatePicker placeHolderText ="Seleccione"/>
-                        </View>
-                </View>
+                  </View>
                 
-                <View>
-                <Text style={{marginTop:20, marginLeft: 10, marginRight: 25, marginBottom: 10}}>Habitación para: </Text>
-                    <Input style={{marginTop:0, marginLeft: 30, marginRight: 25}} 
-                    style={styles.texto} placeholder="Cantidad de Personas"
-                    value ={people} onChangeText = {setPeople}/>
+                <View style = {styles.numeroPersonas}>
+                <Text style={styles.estiloTexto}> Number of people: </Text>
+                    <Input style={styles.cajasDeTexto} value ={people} onChangeText = {setPeople}/>
                 </View>
                     <Button rounded style={styles.boton} 
-                    onPress = {() => { navigation.navigate("SearchResults",{search})}}>
-                    <Text>Buscar</Text>
+                    onPress = {() => { navigation.navigate("SearchResults", {search, people, checkIn,checkOut})}}>
+                    <Text style = {styles.textoBoton}>search</Text>
                     </Button>
-
-               
             </Content>
-            <Image source={require("../../assets/Palmeritas.png")} style={{marginBottom: 30, marginLeft: 150}}/>
+            <Image source={require("../../assets/Palmeritas.png")} style={styles.palmerasImage}/>
         </Container>
+        
     );
 }
 
 const styles = StyleSheet.create({
     container :{
         flex:1,
-        //justifyContent: "center",
-        //alignItems: "center",
-        backgroundColor: "#aac7e2"
+        backgroundColor: "#1d5d77"
     },
     oasisImage :{
-        width: 60,
-        height: 60,
+        width: width * 0.10,
+        height: height * 0.077,
         marginRight: 120
-        //resizeMode: "header",
+
     },
     header :{ 
         backgroundColor: "#eb9284"
     },
+
+    viewEntrada:{
+        flex: 10,
+        flexDirection: "row",
+        height: height * 0.10,
+        width: width * 0.10,
+        marginTop: 10,
+        marginLeft: 17,
+        marginRight: 25,
+        backgroundColor : "#1d5d77"
+        // style={{flex:10, flexDirection: 'row'}} style={{marginTop:10, marginLeft: 16, marginRight: 30, backgroundColor: "#aac7e2"}}
+
+    },
+
+    viewSalida:{
+        flex: 10,
+        flexDirection: "row",
+        marginTop: 10,
+        marginLeft: 60,
+        marginRight: 25,
+        backgroundColor :"#1d5d77"
+        // style={{flex:10, flexDirection: 'row'}}style={{marginTop:10, marginLeft: 80, marginRight: 25,backgroundColor: "#aac7e2"}}
+    },
+
+    numeroPersonas:{
+
+        marginTop: -10,
+        marginLeft: 10,
+        marginRight: 25,
+        marginBottom: 10
+        // style={{marginTop:5, marginLeft: 10, marginRight: 25, marginBottom: 10}}
+    },
+
     eslogan: {
         color: "#07263c",
         justifyContent: "center",
         marginRight: 5,
         marginTop: 20,
         marginLeft: -110,
-        fontSize: 28,
-        // fontStyle: "italic"
+        fontSize: 28
     },
-    texto:{
+    cajasDeTexto:{
         justifyContent: "center",
         alignContent:"center",
         backgroundColor: "#FFFFFF",
         marginRight: -25,
-        // fontStyle: "italic"
+        marginTop: 10
+    },
+
+    estiloTexto:{
+        justifyContent: "center",
+        alignContent:"center",
+        color: "#FFFFFF",
+        fontSize: 19,
+        marginRight: 10,
+        marginTop: 8
     },
     icono:{
         marginTop: 10
 
     },
     boton:{
-        color: "#07263c",
+        backgroundColor: "#aac7e2",
         justifyContent: "center",
         alignContent:"center", 
-        height : 50,
-        width: 345,
-        marginTop: 25
+        height: height * 0.08,
+        width: width * 0.85,
+        marginTop: 15
+    },
+
+    textoBoton:{
+        justifyContent: "center",
+        color: "#1d5d77",
+        fontSize: 15,
+       fontWeight: "bold"
+
     },
     view:{
-        backgroundColor: "#eb9284"
+        backgroundColor: "#1d5d77"
     },
     palmerasImage:{
-        width: 100,
-        height: 20,
-        //resizeMode: "container"
-        marginBottom: 100
+        width : width * 0.30,
+        height: height * 0.20,
+        marginBottom: 25,
+        marginLeft: 150
     }
 });
 
