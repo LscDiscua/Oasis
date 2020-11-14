@@ -15,11 +15,5 @@ web-build/
 # Variable de entorno
 enviroment.js
 
-<<<<<<< HEAD
-enviroment.js
-
-# Chrome
-=======
 # Chrome 
->>>>>>> KarlaArauz
 debug.log
