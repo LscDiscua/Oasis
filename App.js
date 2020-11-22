@@ -3,10 +3,11 @@ import React from "react";
 
 import {StyleSheet, Image, View, Text, Dimensions} from "react-native";
 
-
+// Importa componentes de navegacion entre pantallas
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator }  from "@react-navigation/stack";
 
+// importacion de las pantallas creaadas en src/screens/
 
 import OasisHomeSearch from "./src/screens/OasisHomeSearch"; // Ruta relativa dde donde se encuentra 
 import OasisSearchResults from "./src/screens/OasisSearchResults";
@@ -14,11 +15,15 @@ import OasisInfoHotels from "./src/screens/OasisInfoHotels";
 import OasisHotelDetails from "./src/screens/OasisHotelDetails";
 import OasisGalleryHotel from "./src/screens/OasisGalleryHotel";
 
+// Variables para mostrar las dimensiones que tendran algunos componentes
+
 const { width, height} = Dimensions.get("window");
+
 // Crear nuestras navegacion basada en stack (pilas)
 
 const Stack = createStackNavigator();
 
+// Funcion para mostrar un header personalizado de la primera pantalla
 
 function HeaderHome(){
   return(
@@ -33,9 +38,9 @@ function HeaderHome(){
   );
 }
 
-
+// importacion de las pantalla para ser ejecutadas
 export default function App() {
-  /// Vamos a retorna dicha pantalla  como un componente <>
+  /// Return para mostrar las pantallas creadas
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="HomeSearch">
@@ -68,7 +73,10 @@ export default function App() {
 
 }
 
+// Estilos para la funciones creadas anteriomente
 const styles = StyleSheet.create({
+
+  // Personalizacion de la imagen que se mostrara en el header
   oasisImage :{
       width: width * 0.10,
       height: height * 0.077,
@@ -76,8 +84,9 @@ const styles = StyleSheet.create({
       marginTop: -16,
       marginLeft: 30,
       flex: 1
-      //resizeMode: "header",
   },
+  
+ // Estilo de letra de eslogan   
   eslogan: {
       color: "#07263c",
       justifyContent: "center",
