@@ -1,18 +1,22 @@
 import React, {useEffect, useState} from "react"
 
-import { StyleSheet, View, Text, Dimensions} from "react-native";
+import { StyleSheet, View, Text, Dimensions, Image} from "react-native";
 
 import {
     Container, 
     Spinner,
     Content,
-    Card
+    Card,
+    Button,
+    Icon
 }
 from "native-base";
 
 
 import backend from "../api/backend";
 import getEnvVars from "../../enviroment";
+import { useLinkProps } from "@react-navigation/native";
+import { FlatList } from "react-native-gesture-handler";
 
 const { width, height} = Dimensions.get("window");
 const { apiUrl } = getEnvVars();
@@ -21,11 +25,9 @@ const { apiUrl } = getEnvVars();
 
 const OasisHotelDetails = ({ route, navigation }) =>{
 
-    const { id } = route.params;
+    const { id, name,thumbnailUrl } = route.params;
 
     const [ hotelDetails, setHotelDetails ] = useState( null);
-    
-    const [ photosHotel, setPhotosHotel ] = useState (null);
 
     const [ error, setError ] = useState(false);
 
@@ -41,17 +43,6 @@ const OasisHotelDetails = ({ route, navigation }) =>{
         }
     }
 
-    // const getPhotosHotel = async () => {
-
-    //     try{
-    //         const respuesta = await backend.get(`properties/get-hotel-photos?id=${id}`);
-    //         console.log (response.data)
-    //         setPhotosHotel(respuesta.data);
-    //     }
-    //     catch(error){
-    //         setError(true);
-    //     }
-    // }
 
     useEffect(() =>
     {
@@ -67,36 +58,36 @@ const OasisHotelDetails = ({ route, navigation }) =>{
             </View>
         )
     }
-
-    // function cantidadComodidades (comodidades) {
-
-    //    const comodidades = [hotelDetails.data.body.overview.overviewSections[0].content];
-    //    for(let i=0; i < comodidades.length; i++){
-    //          comodidades[i] + "<br>";
-    //    }
-
-    //    return comodidades;
-
-    // }
-
-    // console.log(hotelDetails.data.body.overview.overviewSections[0].content)
-
-    // console.log(hotelDetails.data.body.pdpHeader.hotelId);
+    // C:\Users\linda\OneDrive\Documentos\III Periodo 2020\Programacion Movil I\Proyecto\Oasis
 
     return(
-        <Container>
-            <View>
-            </View>
-            <Content>
+        <Container style={styles.contenedor}>
+            <Content style={styles.contenedor}>
                 <View>
-                    <Card style = {styles.contenedor}>
+                    <Card style = {styles.cardEstilo}>
+                    <View>
+                    <Text style= {styles.nombreHotel}>{name}</Text>
+                    <Image source={{uri:`${thumbnailUrl}`, }} 
+                            style={styles.hotelImage} /> 
+                        <Button transparent
+                                 onPress = {() => { navigation.navigate("GalleryHotel", {id, name})}} >
+                                     <Text style={styles.textoBoton}>GalleryHotel</Text>
+                                <Icon name = "images"/>
+                        </Button>
+                        
+                    </View>
                         <Text style= {styles.contenido}>{hotelDetails.data.body.overview.overviewSections[0].title}</Text>
-                        <Text style= {styles.comodidades}>{hotelDetails.data.body.overview.overviewSections[0].content}</Text>
-                         <Text style= {styles.contenido}>{hotelDetails.data.body.overview.overviewSections[1].title}</Text>
-                         <Text style= {styles.comodidades}>{hotelDetails.data.body.overview.overviewSections[1].content}{'\n'}</Text>
-                         <Text style= {styles.comodidades}>{hotelDetails.data.body.hygieneAndCleanliness.title}</Text>
-                        <Text style= {styles.comodidades}>{hotelDetails.data.body.hygieneAndCleanliness.healthAndSafetyMeasures.description}{'\n'}</Text>
-                         <Text style= {styles.comodidades}>{hotelDetails.data.body.hygieneAndCleanliness.healthAndSafetyMeasures.measures}</Text>
+                        {hotelDetails.data.body.overview.overviewSections[0].content.map((index) =>(
+                            <Text style={styles.comodidades}>
+                               {"-"}{" "}{index}
+                            </Text>
+                        ))}
+                        <Text style= {styles.contenido}>{hotelDetails.data.body.overview.overviewSections[1].title}</Text>
+                        {hotelDetails.data.body.overview.overviewSections[1].content.map((around) => (
+                            <Text style={styles.comodidades}>  
+                               {"-"} {" "}{around}
+                            </Text>
+                        ))}
                     </Card>
                 </View>
             </Content>
@@ -108,9 +99,35 @@ const OasisHotelDetails = ({ route, navigation }) =>{
 const styles = StyleSheet.create({
 
     contenedor:{
-        backgroundColor: "#aac7e2",
+        backgroundColor: "#1d5d77",
+        fontSize:50,
+        height : height * 2,
+        marginTop: -3
+    },
+
+    cardEstilo:{
+        backgroundColor: "#1d5d77",
         fontSize:50,
         height : height * 2
+    },
+
+    nombreHotel:{
+        fontSize: 25,
+        marginLeft : 30,
+        marginBottom: 15,
+        justifyContent: "center",
+        color:  "#000000",
+        fontWeight: "bold"
+    },
+
+    botonGaleria:{
+        height:50, 
+        width:80, 
+        // backgroundColor: "#aac7e2",
+        marginLeft:30
+    },
+    textoBoton:{
+        fontSize: 20
     },
 
     contenido:{
@@ -119,6 +136,11 @@ const styles = StyleSheet.create({
     comodidades:{
 
         fontSize:20
+    },
+    hotelImage:{
+        height: 200,
+        width: 300,
+        marginLeft: 50
     }
 });
 

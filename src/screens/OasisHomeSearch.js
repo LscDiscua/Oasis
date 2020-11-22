@@ -4,7 +4,7 @@ import React, { useEffect, useState} from "react";
 import { StyleSheet, Image, Dimensions, View} from "react-native";
 import DatePicker from "react-native-datepicker";
 
-
+// Importacion de compenentes necesarios para la primera pantalla
 import {
     Container,
     Header,
@@ -25,21 +25,41 @@ import getEnvVars  from "../../enviroment";
 
 const  { apiUrl } = getEnvVars();
 
+// Variables declaradas para poder utilizar dimensiones del ancho 
+// y largo de la pantalla.
+
 const { width, height} = Dimensions.get("window");
 
+// Funcion principal donde se realiza todo los procesos de la primera pantalla,
+// donde estan incorporadas los componetes que se mostraran en la misma
 
 const OasisHomeSearch = ( {navigation } ) => {
 
-    //Variables necesarias para la conectividad de la
+    /*Variables necesarias para la el funcionamiento de la pantalla*/
+
+    // Variables Search que se encargan de almacenar el valor de la ubicacion 
+    // ingresada en el primer input de la pantalla
 
     const [ search, setSearch ] = useState("");
+
+    // Variables checkin que almecenan el valor de la fecha de entrada 
+    // ingresada en el primer DatePicker
     
     const [ checkIn, setCheckIn ] = useState("");
 
+    // Variables checkOut que almecenan el valor de la fecha de salida
+    // ingresada en el primer DatePicker
+
     const [ checkOut, setCheckOut ] = useState("");
+
+    // Variables people que almecenan el valor de la cantidad de personas
+    // que se registrarian en este caso en el hotel
 
     const [ people, setPeople] = useState("");
 
+
+    // Return de la funcion donde esta la interfaz de la pantalla 
+    // OasisHomeSearch
             
     return (
         <Container style= {styles.container}>
@@ -66,6 +86,8 @@ const OasisHomeSearch = ( {navigation } ) => {
                     <View  style={{height:height * 0.10, flexDirection: 'row'}} />
                     <View style = {styles.viewEntrada}>
                     <DatePicker 
+                    placeHolderTextStyle={{ color: "#d3d3d3" }}
+                    textStyle={{ color: "#FFFFFF" }}
                     mode="date"
                     onDateChange={(checkIn) => {
                         setCheckIn(checkIn);}}
@@ -94,6 +116,9 @@ const OasisHomeSearch = ( {navigation } ) => {
     );
 }
 
+// Estilos de diseño para los diferentes componentes
+//  desde el tamaño, color y personalizacion de elementos
+
 const styles = StyleSheet.create({
     container :{
         flex:1,
@@ -117,7 +142,8 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginLeft: 17,
         marginRight: 25,
-        backgroundColor : "#1d5d77"
+        backgroundColor : "#1d5d77",
+        color: "#FFFFFF"
         // style={{flex:10, flexDirection: 'row'}} style={{marginTop:10, marginLeft: 16, marginRight: 30, backgroundColor: "#aac7e2"}}
 
     },
@@ -196,4 +222,7 @@ const styles = StyleSheet.create({
     }
 });
 
+
+// Exporta la funcion para que pueda ser utilizada en en manejo
+// de pantallas en App.js
 export default OasisHomeSearch;

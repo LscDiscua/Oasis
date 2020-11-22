@@ -19,9 +19,6 @@ import { TouchableOpacity } from "react-native-gesture-handler";
 
 const {apiUrl} = getEnvVars();
 
-
-
-
 const OasisInfoHotels = ({ route, navigation}) => {
 
 
@@ -60,20 +57,21 @@ const OasisInfoHotels = ({ route, navigation}) => {
     // console.log(resultHotels.data.body.searchResults.results[0].id)
     return(
             <View>
-                <View  style ={{backgroundColor: "#aac7e2"}}>
+                <View  style ={{ backgroundColor: "#1d5d77"}}>
                     <Text style={styles.informacionHotel}>
                         Escoja el Hotel que desea {people}
                     </Text>
                 </View>
                     <View>
-                        <FlatList style ={{backgroundColor: "#aac7e2"}}
+                        <FlatList style ={{ backgroundColor: "#1d5d77"}}
                          data ={resultHotels.data.body.searchResults.results}
                          keyExtractor = {(item) => item.id.toString()}
                          ListEmptyComponent ={<Text>No hotels found</Text>}
                          renderItem = {({item}) =>{
                                 return(
                                     <View>
-                                        <TouchableOpacity onPress = {() => { navigation.navigate("HotelDetails", {id: item.id})}}>
+                                        <TouchableOpacity onPress = {() => { navigation.navigate("HotelDetails", {id: item.id, 
+                                            name: item.name, thumbnailUrl: item.thumbnailUrl})}}>
                                         <Card style={styles.opcionesHoteles}>
                                             <CardItem style ={{backgroundColor: "#aac7e2"}}>
                                                 <Body> 
@@ -112,7 +110,7 @@ const styles = StyleSheet.create({
     },
     informacionHotel:{
         fontSize: 20,
-        color:"#375A6A",
+        color:"#000000",
         marginLeft: 19,
         fontWeight: 'bold'
 
@@ -125,10 +123,12 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         marginBottom: 50
 
+    },
+
+    textoInicial:{
+        fontWeight: "bold",
+        
     }
-
-
-
 
 });
 
