@@ -33,9 +33,11 @@ import getEnvVars from "../../enviroment";
     poder acceder a los hoteles correspondientes */
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-// Variable importada desde enviromente para utilizarla en la API
+// Variable para utilizar las dimensiones de la pantalla.
 
 const { width, height} = Dimensions.get("window");
+
+// Variable importada desde enviromente para utilizarla en la API.
 
 const { apiUrl } = getEnvVars();
 
@@ -94,87 +96,99 @@ const OasisSearchResults = ({ route, navigation}) => {
         )  
     }
 
-    // console.log(hotels.suggestions[0].entities)
-
     /* Punto de retorno de la funcion principal, donde en la cual esta 
-        incorpoda el diseño de dicha pantalla */
+        incorpoda el diseño de dicha pantalla y los resultados encontrados 
+        en la API 
+    */
     return(
         <Container style ={{ backgroundColor: "#1d5d77"}}>
             <H1 style={styles.titulosIniciales}> {search}</H1>
             <View style ={{marginRight:10, marginLeft:10}}>
                 <Text style={styles.titulos}>Select the destination you want according to the location</Text>
             </View>
-        <Content styles = {{marginTop:30}} style={styles.sizeContenedor}>
-            <Text style ={styles.opciones} >Places of the City</Text>
-            <View>
-                <FlatList style ={styles.sizeFla}
-                data = {hotels.suggestions[0].entities}
-                keyExtractor ={(item) => item.destinationId}
-                ListEmptyComponent = {<Text>No hotels found</Text>}
-                renderItem ={({item}) =>{
-                    return(
-                    <View >
-                         <TouchableOpacity onPress = {() => { navigation.navigate("InfoHotels", {destinationId: item.destinationId, people})}}>
-                            <Card style= {styles.opcionesDestino}>
-                                <CardItem>
-                                    <Body>
-                                        <Text>{item.name}</Text>
-                                    </Body>
-                                </CardItem>
-                            </Card>
-                        </TouchableOpacity>
-                    </View>
-                    ) 
-                }}
-                />
-        </View>
-        <Text style ={styles.opciones}>Reference point</Text>
-        <View>
-        <FlatList style ={{backgroundColor: "#1d5d77"}}
-             data = {hotels.suggestions[1].entities}
-             keyExtractor ={(item) => item.destinationId}
-             ListEmptyComponent = {<Text>No hotels found</Text>}
-             renderItem ={({item}) =>{
-                 return(
-                    <View >
-                         <TouchableOpacity onPress = {() => { navigation.navigate("InfoHotels", {destinationId: item.destinationId, people})}}>
-                            <Card  style= {styles.opcionesDestino}>
-                                <CardItem>
-                                    <Body>
-                                        <Text>{item.name}</Text>
-                                    </Body>
-                                </CardItem>
-                            </Card>
-                        </TouchableOpacity>
-                    </View>
-                 ) 
-             }}
-        />
-        </View>
-        <Text style ={styles.opciones}>Transport groups</Text>
-        <View>
-        <FlatList style ={{backgroundColor: "#1d5d77"}}
+
+        {/* Content donde se muestran los destinos encontrados por la lugar ingresado
+            donde se consta de tres opciones entre destinos y cada una de ella contiene lugares
+            que se pueden seleccionar */}
+
+        {/* Lo que se mostrara de cada lugar es el nombre del destino */}
+            <Content styles = {{marginTop:30}} style={styles.sizeContenedor}>
+                    {/*  Opciones de Places Of the City */}
+                <Text style ={styles.opciones} >Places of the City</Text>
+                <View>
+                        <FlatList style ={styles.sizeFla}
+                        data = {hotels.suggestions[0].entities}
+                        keyExtractor ={(item) => item.destinationId}
+                        ListEmptyComponent = {<Text>No hotels found</Text>}
+                        renderItem ={({item}) =>{
+                            return(
+                            <View >
+                                <TouchableOpacity onPress = {() => { navigation.navigate("InfoHotels", {destinationId: item.destinationId, 
+                                    people, checkIn, checkOut})}}>
+                                    <Card style= {styles.opcionesDestino}>
+                                        <CardItem>
+                                            <Body>
+                                                <Text>{item.name}</Text>
+                                            </Body>
+                                        </CardItem>
+                                    </Card>
+                                </TouchableOpacity>
+                            </View>
+                            ) 
+                        }}
+                        />
+                </View>
+                {/*  Opciones de Reference point */}
+                <Text style ={styles.opciones}>Reference point</Text>
+                <View>
+                        <FlatList style ={{backgroundColor: "#1d5d77"}}
+                        data = {hotels.suggestions[1].entities}
+                        keyExtractor ={(item) => item.destinationId}
+                        ListEmptyComponent = {<Text>No hotels found</Text>}
+                        renderItem ={({item}) =>{
+                            return(
+                                <View >
+                                    <TouchableOpacity onPress = {() => { navigation.navigate("InfoHotels", {destinationId: item.destinationId,
+                                        people, checkIn, checkOut})}}>
+                                        <Card  style= {styles.opcionesDestino}>
+                                            <CardItem>
+                                                <Body>
+                                                    <Text>{item.name}</Text>
+                                                </Body>
+                                            </CardItem>
+                                        </Card>
+                                    </TouchableOpacity>
+                                </View>
+                                ) 
+                            }}
+                        />
+                </View>
+                {/*  Opciones de Transport groups */}
+                <Text style ={styles.opciones}>Transport groups</Text>
+                <View>
+                    <FlatList style ={{backgroundColor: "#1d5d77"}}
                     data = {hotels.suggestions[2].entities}
                     keyExtractor ={(item) => item.destinationId}
                     ListEmptyComponent = {<Text>No hotels found</Text>}
                     renderItem ={({item}) =>{
                         return(
-                        <View >
-                            <TouchableOpacity onPress = {() => { navigation.navigate("InfoHotels", {destinationId: item.destinationId, people})}}>
-                                 <Card  style= {styles.opcionesDestino}>
-                                     <CardItem>
-                                         <Body>
-                                             <Text style = {{justifyContent:"center"}}>{item.name}</Text>
-                                         </Body>
-                                    </CardItem>
+                            <View >
+                                <TouchableOpacity onPress = {() => { navigation.navigate("InfoHotels", {destinationId: item.destinationId, 
+                                    people, checkIn, checkOut})}}>
+                                    <Card  style= {styles.opcionesDestino}>
+                                        <CardItem>
+                                            <Body>
+                                                <Text style = {{justifyContent:"center"}}>{item.name}</Text>
+                                            </Body>
+                                        </CardItem>
                                     </Card>
-                            </TouchableOpacity>
-                        </View>
-                        ) 
-                    }}
-                />
-         </View>
-        </Content>
+                                </TouchableOpacity>
+                            </View>
+                            ) 
+                        }}
+                        />
+                </View>
+            </Content>
     </Container>
  
     );
@@ -184,21 +198,24 @@ const OasisSearchResults = ({ route, navigation}) => {
 // Estilos de diseño para los diferentes componentes desde el tamaño, 
 // color y personalizacion de elementos necesarios para la pantalla
 
-
 const styles = StyleSheet.create({
 
+    // Estilo de content de opciones
     sizeContenedor:{
         height: height * 90,
         width: width * 1.10,
         backgroundColor: "#1d5d77"
     },
     
+    // Titulo inicial de la pantalla 
     titulos:{
         fontSize:17,
         justifyContent: "center",
-        marginTop: 15
+        marginTop: 15,
+        color: "#FFFFFF"
     },
 
+    // Estilo de texto de titulo de las opciones 
     opciones:{
         fontSize:17,
         justifyContent: "center",
@@ -208,6 +225,7 @@ const styles = StyleSheet.create({
 
     },
 
+    // Estilo especifico para una opcion
     opcion4:{
         fontSize:17,
         justifyContent: "center",
@@ -217,6 +235,7 @@ const styles = StyleSheet.create({
 
     },
 
+    // Estilo del texto donde se muestra el resultado de la busqueda
     titulosIniciales:{
         fontSize:25,
         alignContent: "center",
@@ -226,6 +245,7 @@ const styles = StyleSheet.create({
         // marginRight:50
     },
 
+    // Estilo de los card de las opciones de lugares 
     opcionesDestino:{
 
         height: 30, 
