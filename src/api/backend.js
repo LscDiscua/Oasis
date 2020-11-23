@@ -1,19 +1,25 @@
 // Importacion de axios 
 import axios from "axios";
-// Importacion de enviroment 
-import getEnvVars from "../../enviroment";
 
-// Varibles necesarias para poder realizar la conexión de la API
-const  { apiUrl , apiKey , apiHost , useQuery }  =  getEnvVars ( ) ;
+// importacion de la variable proveniente de la enviroment
+import getEnvVars from "../../enviroment"
 
-// Funcion para realizar la conexion con la API
+// Varibles necesarias para poder realizar la conexion de la API
+const { apiUrl, apiKey, apiHost, useQuery } = getEnvVars();
+
+// Funcion que contiene la creacion de conexion de axios
+// a nuestra aplicacion
 const instance = axios.create({
-    baseURL : apiUrl ,
-    encabezados : { 
-        'x-rapidapi-key' : apiKey , 
-        'x-rapidapi-host' : apiHost , 
-        'useQueryString' : useQuery
-    }
-    
+
+    baseURL: apiUrl,
+    headers: { 
+        'x-rapidapi-key': apiKey, 
+        'x-rapidapi-host': apiHost, 
+        'useQueryString': useQuery
+
+      }
+
 });
+
+// Exporta la funcion para que pueda ser utilizada en en manejo
 export default instance;
