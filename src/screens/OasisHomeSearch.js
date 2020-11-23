@@ -41,38 +41,12 @@ const OasisHomeSearch = ( {navigation } ) => {
     // Variables Search que se encargan de almacenar el valor de la ubicacion 
     // ingresada en el primer input de la pantalla
 
-    const [ search, setSearch ] = useState("");
-
-const OasisHomeSearch = () => {
-
-    const [hotels, setHolets] = useState(null);
-
-    const [error, setError] = useState(false);
-
     const [search, setSearch] = useState("");
-
-        const getHotels = async () =>
-        {
-            try{
-
-            const response = await backend.get(`flights?access_key=${apiKey}`);
-
-            console.log(response.data);
-            //setHolets(response.data);
-            }
-            catch(error){
-                setError(true);
-            }
-        }
-
-        useEffect(() =>{
-            getHotels();
-        });
 
     // Variables checkin que almecenan el valor de la fecha de entrada 
     // ingresada en el primer DatePicker
     
-    const [ checkIn, setCheckIn ] = useState("");
+    const [ checkIn, setCheckIn] = useState("");
 
     // Variables checkOut que almecenan el valor de la fecha de salida
     // ingresada en el primer DatePicker
@@ -162,6 +136,8 @@ const OasisHomeSearch = () => {
         
     );
 }
+
+
 
 // Estilos de diseño para los diferentes componentes
 //  desde el tamaño, color y personalizacion de elementos
@@ -294,7 +270,6 @@ const styles = StyleSheet.create({
         marginLeft: 150
     }
 });
-
 
 // Exporta la funcion para que pueda ser utilizada en en manejo
 // de pantallas en App.js
