@@ -8,13 +8,11 @@
     "eject": "expo eject"
   },
   "dependencies": {
-<<<<<<< HEAD
+
     "@react-native-community/masked-view": "0.1.10",
     "@react-navigation/native": "^5.8.6",
-    "@react-navigation/stack": "^5.12.3",
-=======
-    "@react-navigation/native": "^5.8.6",
->>>>>>> ae10efb6145df41576f3fc6a5eff2e0bb1f956dd
+
+    "@react-navigation/stack": "^5.12.5",
     "axios": "^0.21.0",
     "dotenv": "^8.2.0",
     "expo": "~39.0.2",
@@ -23,20 +21,15 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-native": "https://github.com/expo/react-native/archive/sdk-39.0.4.tar.gz",
-<<<<<<< HEAD
+
+    "react-native-datepicker": "^1.7.2",
     "react-native-gesture-handler": "~1.7.0",
     "react-native-reanimated": "~1.13.0",
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "~2.10.1",
-    "react-native-web": "~0.13.12"
-=======
     "react-native-web": "~0.13.12",
-    "react-native-gesture-handler": "~1.7.0",
-    "react-native-reanimated": "~1.13.0",
-    "react-native-screens": "~2.10.1",
-    "react-native-safe-area-context": "3.1.4",
-    "@react-native-community/masked-view": "0.1.10"
->>>>>>> ae10efb6145df41576f3fc6a5eff2e0bb1f956dd
+
+    "expo-font": "~8.3.0"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"

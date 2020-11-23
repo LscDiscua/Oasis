@@ -1,7 +1,15 @@
+/* Segunda Pantalla de la Aplicacion Osasis Search Results
+   donde se mostrara una lista de destinos con respecto a la ubicacion 
+   que se haya ingresado en la primera pantalla.*/
+
+/* Se importan los modulos necesarios para la pantalla */
+
 import React, {useEffect, useState} from "react"
 
-import { StyleSheet, View, Text, FlatList } from "react-native";
+import { StyleSheet, View, Text, FlatList,Dimensions} from "react-native";
 
+/* Se importan los componentes provenientes de native-base 
+    para poder mostrar los datos provenientes de la API */
 import {
     Card,
     CardItem,
@@ -15,18 +23,46 @@ import {
 } 
 from "native-base";
 
+
+/* Se traen de los archivos backend y enviroment
+   los compontes nesarios para utlizar la API en la pantalla */
 import backend from "../api/backend";
 import getEnvVars from "../../enviroment";
 
+/*  Componente importado para poder seleccionar un destino y con ello
+    poder acceder a los hoteles correspondientes */
+import { TouchableOpacity } from "react-native-gesture-handler";
+
+// Variable para utilizar las dimensiones de la pantalla.
+
+const { width, height} = Dimensions.get("window");
+
+// Variable importada desde enviromente para utilizarla en la API.
+
 const { apiUrl } = getEnvVars();
+
+
+/* Funcion principal de la segunda pantalla, donde se retornan los destinos
+    encontrados segun la ubicacion ingresada en la primera pantalla */
 
 const OasisSearchResults = ({ route, navigation}) => {
 
-    const { search } = route.params;
+    // Variables provenientes de la primera pantalla OaisHomeSearch
+    // para poder utilizarlas como parametro de busqueda en la API
+
+    const { search, people, checkIn, checkOut } = route.params;
+
+    // Variables que se utlizaran en funcion con la API para atraer los
+    // datos que esta nos retorne.
 
     const [hotels, setHotels] = useState(null);
 
+    // Varibles para cuando ocurra un error en la funcion
     const [ error, setError] = useState(false);
+
+    /* Funcion encargada de traer los datos provenientede la API
+       teniendo como parametros algunas variables declaradas anteriomente
+       con el fin de extraer los datos necesarios.  */
 
     const getHotels = async () =>{
 
@@ -44,12 +80,14 @@ const OasisSearchResults = ({ route, navigation}) => {
 
     }
 
+    // HOOKS de efecto que retorna la funcion getHotels
     useEffect(() =>
     {
         getHotels();
     }, []);
 
-
+    // Condicion encargada de mostrar un Spinner en la pantalla cuando
+    // no se encuentren datos correspondientes a la ubicacion ingresada.
     if (!hotels){
         return(
             <View style = {{flex :1, justifyContent:"center"}}>
@@ -58,103 +96,126 @@ const OasisSearchResults = ({ route, navigation}) => {
         )  
     }
 
-
-
-    // const arreglo = () =>{
-    
-    //     (hotels.suggestions).forEach(valor => {
-    
-    //         (hotels.entities).forEach(valor => {
-    
-    //             console.log(`${valor}`);
-            
-    //         });
-            
-    //     });
-    // }
-
-    // console.log(hotels.suggestions[0].entities)
+    /* Punto de retorno de la funcion principal, donde en la cual esta 
+        incorpoda el diseño de dicha pantalla y los resultados encontrados 
+        en la API 
+    */
     return(
-       <Container style ={{backgroundColor: "#aac7e2"}}>
-           <H1 style={styles.titulosIniciales}> {search}</H1>
-           <View style ={{marginRight:10, marginLeft:10}}>
-                    <Text style={styles.titulos}>Seleccione el destino que desea segun la ubicacion</Text>
-               </View>
-           <Content style={styles.sizeContenedor}>
-               
-        <View styles = {{marginTop:30}}>
-            <Text style ={styles.opciones} >Lugares de la Cuidad</Text>
-                <FlatList style ={styles.sizeFla}
-                data = {hotels.suggestions[0].entities}
-                keyExtractor ={(item) => item.destinationId}
-                ListEmptyComponent = {<Text>No se han encontrado Hoteles</Text>}
-                renderItem ={({item}) =>{
-                    return(
-                    <View >
-                        <Card style= {styles.opcionesDestino}><CardItem ><Body><Text>{item.name}</Text></Body></CardItem></Card>
-                    </View>
-                    ) 
-                }}
-                />
-        <Text style ={styles.opciones} >Punto de Referencia</Text>
-        <FlatList style ={{backgroundColor: "#aac7e2"}}
-             data = {hotels.suggestions[1].entities}
-             keyExtractor ={(item) => item.destinationId}
-             ListEmptyComponent = {<Text>No se han encontrado Hoteles</Text>}
-             renderItem ={({item}) =>{
-                 return(
-                    <View >
-                        <Card  style= {styles.opcionesDestino}><CardItem><Body><Text>{item.name}</Text></Body></CardItem></Card>
-                    </View>
-                 ) 
-             }}
-        />
-        <Text style ={styles.opciones}>Grupos de Transporte</Text>
-        <FlatList style ={{backgroundColor: "#aac7e2"}}
+        <Container style ={{ backgroundColor: "#1d5d77"}}>
+            <H1 style={styles.titulosIniciales}> {search}</H1>
+            <View style ={{marginRight:10, marginLeft:10}}>
+                <Text style={styles.titulos}>Select the destination you want according to the location</Text>
+            </View>
+
+        {/* Content donde se muestran los destinos encontrados por la lugar ingresado
+            donde se consta de tres opciones entre destinos y cada una de ella contiene lugares
+            que se pueden seleccionar */}
+
+        {/* Lo que se mostrara de cada lugar es el nombre del destino */}
+            <Content styles = {{marginTop:30}} style={styles.sizeContenedor}>
+                    {/*  Opciones de Places Of the City */}
+                <Text style ={styles.opciones} >Places of the City</Text>
+                <View>
+                        <FlatList style ={styles.sizeFla}
+                        data = {hotels.suggestions[0].entities}
+                        keyExtractor ={(item) => item.destinationId}
+                        ListEmptyComponent = {<Text>No hotels found</Text>}
+                        renderItem ={({item}) =>{
+                            return(
+                            <View >
+                                <TouchableOpacity onPress = {() => { navigation.navigate("InfoHotels", {destinationId: item.destinationId, 
+                                    people, checkIn, checkOut})}}>
+                                    <Card style= {styles.opcionesDestino}>
+                                        <CardItem>
+                                            <Body>
+                                                <Text>{item.name}</Text>
+                                            </Body>
+                                        </CardItem>
+                                    </Card>
+                                </TouchableOpacity>
+                            </View>
+                            ) 
+                        }}
+                        />
+                </View>
+                {/*  Opciones de Reference point */}
+                <Text style ={styles.opciones}>Reference point</Text>
+                <View>
+                        <FlatList style ={{backgroundColor: "#1d5d77"}}
+                        data = {hotels.suggestions[1].entities}
+                        keyExtractor ={(item) => item.destinationId}
+                        ListEmptyComponent = {<Text>No hotels found</Text>}
+                        renderItem ={({item}) =>{
+                            return(
+                                <View >
+                                    <TouchableOpacity onPress = {() => { navigation.navigate("InfoHotels", {destinationId: item.destinationId,
+                                        people, checkIn, checkOut})}}>
+                                        <Card  style= {styles.opcionesDestino}>
+                                            <CardItem>
+                                                <Body>
+                                                    <Text>{item.name}</Text>
+                                                </Body>
+                                            </CardItem>
+                                        </Card>
+                                    </TouchableOpacity>
+                                </View>
+                                ) 
+                            }}
+                        />
+                </View>
+                {/*  Opciones de Transport groups */}
+                <Text style ={styles.opciones}>Transport groups</Text>
+                <View>
+                    <FlatList style ={{backgroundColor: "#1d5d77"}}
                     data = {hotels.suggestions[2].entities}
                     keyExtractor ={(item) => item.destinationId}
-                    ListEmptyComponent = {<Text>No se han encontrado Hoteles</Text>}
+                    ListEmptyComponent = {<Text>No hotels found</Text>}
                     renderItem ={({item}) =>{
                         return(
-                        <View >
-                            <Card  style= {styles.opcionesDestino}><CardItem><Body><Text style = {{justifyContent:"center"}}>{item.name}</Text></Body></CardItem></Card>
-                        </View>
-                        ) 
-                    }}
-                />
-         <Text style={styles.opcion4}> Cercanos a Otros Hoteles</Text>
-         <FlatList style ={{backgroundColor: "#aac7e2"}}
-                    data = {hotels.suggestions[3].entities}
-                    keyExtractor ={(item) => item.destinationId}
-                    ListEmptyComponent = {<Text>No se han encontrado Hoteles</Text>}
-                    renderItem ={({item}) =>{
-                        return(
-                        <View >
-                            <Card  style= {styles.opcionesDestino}><CardItem><Body><Text>{item.name}</Text></Body></CardItem></Card>
-                        </View>
-                        ) 
-                    }}
-                />
-        </View>
-        </Content>
-       </Container>
+                            <View >
+                                <TouchableOpacity onPress = {() => { navigation.navigate("InfoHotels", {destinationId: item.destinationId, 
+                                    people, checkIn, checkOut})}}>
+                                    <Card  style= {styles.opcionesDestino}>
+                                        <CardItem>
+                                            <Body>
+                                                <Text style = {{justifyContent:"center"}}>{item.name}</Text>
+                                            </Body>
+                                        </CardItem>
+                                    </Card>
+                                </TouchableOpacity>
+                            </View>
+                            ) 
+                        }}
+                        />
+                </View>
+            </Content>
+    </Container>
  
     );
 }
 
+
+// Estilos de diseño para los diferentes componentes desde el tamaño, 
+// color y personalizacion de elementos necesarios para la pantalla
+
 const styles = StyleSheet.create({
 
+    // Estilo de content de opciones
     sizeContenedor:{
-        height: 500,
-        width: 500
+        height: height * 90,
+        width: width * 1.10,
+        backgroundColor: "#1d5d77"
     },
     
+    // Titulo inicial de la pantalla 
     titulos:{
         fontSize:17,
         justifyContent: "center",
-        marginTop: 15
+        marginTop: 15,
+        color: "#FFFFFF"
     },
 
+    // Estilo de texto de titulo de las opciones 
     opciones:{
         fontSize:17,
         justifyContent: "center",
@@ -164,6 +225,7 @@ const styles = StyleSheet.create({
 
     },
 
+    // Estilo especifico para una opcion
     opcion4:{
         fontSize:17,
         justifyContent: "center",
@@ -173,6 +235,7 @@ const styles = StyleSheet.create({
 
     },
 
+    // Estilo del texto donde se muestra el resultado de la busqueda
     titulosIniciales:{
         fontSize:25,
         alignContent: "center",
@@ -182,6 +245,7 @@ const styles = StyleSheet.create({
         // marginRight:50
     },
 
+    // Estilo de los card de las opciones de lugares 
     opcionesDestino:{
 
         height: 30, 
@@ -191,9 +255,9 @@ const styles = StyleSheet.create({
 
     }
 
-
-
-
 });
+
+// Exporta la funcion para que pueda ser utilizada en en manejo
+// de pantallas en App.js
 
 export default OasisSearchResults; 
